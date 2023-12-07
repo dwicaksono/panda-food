@@ -2,26 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer utilities {
+	.bg-glassBlur {
+		@apply backdrop-filter backdrop-blur-xl bg-opacity-0  border-gray-200/40;
+	}
+	.text-title-purple {
+		@apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-fit;
+	}
+	.text-title-emerlad {
+		@apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% w-fit;
+	}
+	.text-title-orange {
+		@apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-sky-500  via-50% to-emerald-500 w-fit;
+	}
+	.bg-gradient-emerlad {
+		@apply bg-gradient-to-r from-green-400 to-blue-500;
+	}
+	.bg-gradient-orange {
+		@apply bg-gradient-to-r from-pink-500 to-yellow-500;
+	}
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+	/* color-scheme: dark; */
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+::-webkit-scrollbar {
+	display: none;
+}
+html {
+	scrollbar-width: none;
 }
