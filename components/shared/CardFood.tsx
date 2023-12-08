@@ -1,15 +1,18 @@
 "use client";
+
 import { useCartStore } from "@/zustand/cart.store";
 import Image from "next/image";
 import React from "react";
 import { IoAddCircle } from "react-icons/io5";
 
 const CardFood = (params) => {
-	const { srcUrl, title, price, status, id } = params;
-
+	const { srcUrl, title, price, status, _id } = params;
+	const { data: results, addData, clearPersistedData } = useCartStore();
 	const addItemHandle = () => {
-		console.log({ srcUrl, title, price, status, id }, "masuk");
-		addCart();
+		// 	console.log({ srcUrl, title, price, status, _id }, "masuk");
+		addData({ srcUrl, title, price, status, _id });
+
+		// clearPersistedData();
 	};
 
 	return (

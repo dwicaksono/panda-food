@@ -1,10 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 "use client";
 import { useSubsribeOrder } from "@/app/hooks/useSubscribeOrder";
-import { pusherClient } from "@/pusherConfig";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { FaConciergeBell } from "react-icons/fa";
 const Navbar = () => {
 	const { notifications } = useSubsribeOrder();
