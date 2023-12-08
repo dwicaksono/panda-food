@@ -7,12 +7,9 @@ import { IoAddCircle } from "react-icons/io5";
 
 const CardFood = (params) => {
 	const { srcUrl, title, price, status, _id } = params;
-	const { data: results, addData, clearPersistedData } = useCartStore();
+	const { addData } = useCartStore();
 	const addItemHandle = () => {
-		// 	console.log({ srcUrl, title, price, status, _id }, "masuk");
 		addData({ srcUrl, title, price, status, _id });
-
-		// clearPersistedData();
 	};
 
 	return (

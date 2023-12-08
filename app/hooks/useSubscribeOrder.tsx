@@ -14,10 +14,10 @@ export const useSubsribeOrder = () => {
 		const channel = pusherClient.subscribe("order");
 
 		channel.bind("order", (data) => {
+			console.log(data);
 			if (!!data) {
 				setNotifications([...notifications, data]);
 				playOn();
-				console.log(data);
 				toast.custom((t) => (
 					<div
 						className={`${
@@ -49,7 +49,7 @@ export const useSubsribeOrder = () => {
 		return () => {
 			pusherClient.unsubscribe("order");
 		};
-	}, [notifications]);
+	}, [notifications, playOn]);
 
 	return { notifications };
 };

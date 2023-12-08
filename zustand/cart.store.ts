@@ -1,16 +1,20 @@
 // store.ts
+import state from "pusher-js/types/src/core/http/state";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 //Define the type for the store state
 interface DataStoreState {
-	data: any[]; // Adjust the type as per your data structure
+	data: any[];
 }
 
 // Define the type for the store actions
 interface DataStoreActions {
-	addData: (newObject: any) => void; // Adjust the type for newObject as per your data structure
+	addData: (newObject: any) => void;
+	decreaseItem: (id: number | string) => void;
+	increaseItem: (id: number | string) => void;
 	clearPersistedData: () => void;
+	deleteItem: (id: number | string) => void;
 }
 const getInitialData = () => {
 	if (typeof window !== "undefined") {
@@ -25,8 +29,79 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 	persist(
 		(set) => ({
 			data: getInitialData(),
-			addData: (newObject: any) =>
-				set((state) => ({ data: [...state.data, newObject] })),
+			addData: (newObject: any) => {
+				set((state) => {
+					const itemExists = state.data.find(
+						(item) => item._id === newObject._id
+					);
+
+					if (itemExists) {
+						const updatedData = state.data.map((item) => {
+							if (item._id === newObject._id) {
+								return {
+									...item,
+									qty: item.qty + 1,
+									subPrice: (item.qty + 1) * newObject.price,
+									// Calculate subPrice based on updated quantity
+								};
+							}
+							return item;
+						});
+
+						return { data: updatedData };
+					} else {
+						return {
+							data: [
+								...state.data,
+								{ ...newObject, qty: 1, subPrice: newObject.price },
+							],
+						};
+					}
+				});
+			},
+
+			increaseItem: (id: number | string) => {
+				set((state) => {
+					const increaseData = state.data.map((item) => {
+						if (item._id === id) {
+							return {
+								...item,
+								qty: item.qty + 1,
+								subPrice: item.subPrice + item.price,
+							};
+						}
+						return item;
+					});
+					return { data: increaseData };
+				});
+			},
+
+			decreaseItem: (id: number | string) => {
+				set((state) => {
+					const decreaseData = state.data.map((item) => {
+						if (item._id === id) {
+							return {
+								...item,
+								qty: item.qty - 1,
+								subPrice:
+									item.subPrice <= item.price
+										? item.price
+										: item.subPrice - item.price,
+							};
+						}
+						return item;
+					});
+					return { data: decreaseData };
+				});
+			},
+
+			deleteItem: (id: number | string) => {
+				set((state) => {
+					const deletedState = state.data.filter((item) => item._id !== id);
+					return { data: deletedState };
+				});
+			},
+
 			clearPersistedData: () => {
 				localStorage.removeItem("myCart"); // Clear the persisted data
 				set({ data: [] }); // Reset the state to an empty array

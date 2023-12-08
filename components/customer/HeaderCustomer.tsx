@@ -1,9 +1,6 @@
 import React from "react";
-import { LuShoppingBag } from "react-icons/lu";
 import Search from "../shared/Search";
 import Category from "./Category";
-import Link from "next/link";
-import { useCartStore } from "@/zustand/cart.store";
 import Cart from "./Cart";
 const HeaderCustomer = ({ table }) => {
 	return (
