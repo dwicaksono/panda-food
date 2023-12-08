@@ -1,4 +1,4 @@
-import { pusherClient } from "@/pusherConfig";
+import { pusherClient } from "@/lib/pusherConfig";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import useSound from "use-sound";

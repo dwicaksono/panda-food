@@ -10,7 +10,6 @@ import { FaCircleChevronLeft } from "react-icons/fa6";
 const CartCustomer = () => {
 	const { push, back } = useRouter();
 
-	const [isDone, setIsDone] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { clearPersistedData } = useCartStore();
 	const data = useAsyncStore(useCartStore, (state) => state.data);
@@ -18,18 +17,25 @@ const CartCustomer = () => {
 
 	const handlerCheckout = async () => {
 		setIsLoading(true);
-		const orderItems = data?.map((item) => ({ ...item, status: "waiting" }));
+		const orderItems = await data?.map((item) => ({
+			...item,
+			status: "waiting",
+		}));
+
 		await fetch("/api/pusher", {
 			method: "POST",
 			body: JSON.stringify({ status: "waiting", orderItems }),
 			headers: { "content-type": "application/json" },
 		});
-		// setIsDone(true);
-		// toast.success("Pembayaran anda berhasil, terimakasih", {
-		// 	position: "top-center",
-		// });
-		// clearPersistedData();
-		// push("/customer/history");
+
+		setTimeout(() => {
+			setIsLoading(false);
+			toast.success("Pembayaran anda berhasil, terimakasih", {
+				position: "top-center",
+			});
+			clearPersistedData();
+			push("/customer/history");
+		}, 2000);
 	};
 
 	return (
@@ -60,11 +66,11 @@ const CartCustomer = () => {
 						</div>
 						<button
 							className={`${
-								isDone ? "bg-slate-500" : "bg-gradient-orange"
+								isLoading ? "bg-slate-500" : "bg-gradient-orange"
 							} px-8 shadow font-base drop-shadow-lg rounded-2xl text-slate-50`}
 							onClick={handlerCheckout}
-							disabled={isDone}>
-							Checkout
+							disabled={isLoading}>
+							{isLoading ? "...loading" : "Checkout"}
 						</button>
 					</div>
 				</div>

@@ -28,7 +28,7 @@ const CardCartFood = (params) => {
 				<p className="text-sm font-semibold">{rupiahCurrency(price)}</p>
 				<div className="flex justify-between items-center w-full gap-4">
 					<button onClick={() => deleteItem(_id)}>
-						<AiFillDelete className="text-3xl text-pink-600 cursor-pointer drop-shadow-md" />
+						<AiFillDelete className="text-2xl text-pink-600 cursor-pointer drop-shadow-md" />
 					</button>
 
 					<div className="flex justify-between bg-gradient-orange w-full items-center rounded-full p-2 drop-shadow-md">

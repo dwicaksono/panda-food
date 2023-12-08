@@ -5,7 +5,6 @@ import { FaConciergeBell } from "react-icons/fa";
 import { SiFoodpanda } from "react-icons/si";
 const Navbar = () => {
 	const { notifications } = useSubsribeOrder();
-	console.log(notifications, ">>>>>");
 	return (
 		<>
 			<header className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-4 px-8 text-white flex justify-center">
