@@ -6,7 +6,7 @@ import React from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 const CardCartFood = (params) => {
-	const { srcUrl, title, price, qty, _id } = params;
+	const { srcUrl, title, price, qty, id } = params;
 
 	const { decreaseItem, deleteItem, increaseItem } = useCartStore();
 	return (
@@ -27,13 +27,13 @@ const CardCartFood = (params) => {
 				<p className="text-xl font-semibold">{title}</p>
 				<p className="text-sm font-semibold">{rupiahCurrency(price)}</p>
 				<div className="flex justify-between items-center w-full gap-4">
-					<button onClick={() => deleteItem(_id)}>
+					<button onClick={() => deleteItem(id)}>
 						<AiFillDelete className="text-2xl text-pink-600 cursor-pointer drop-shadow-md" />
 					</button>
 
 					<div className="flex justify-between bg-gradient-orange w-full items-center rounded-full p-2 drop-shadow-md">
 						<button
-							onClick={() => decreaseItem(_id)}
+							onClick={() => decreaseItem(id)}
 							disabled={qty <= 1}
 							className={`text-xl ${
 								qty <= 1 ? "text-slate-300 cursor-not-allowed" : "text-slate-50"
@@ -46,7 +46,7 @@ const CardCartFood = (params) => {
 						</div>
 
 						<button
-							onClick={() => increaseItem(_id)}
+							onClick={() => increaseItem(id)}
 							disabled={false}
 							className={"text-xl text-slate-50"}>
 							<FaCirclePlus />

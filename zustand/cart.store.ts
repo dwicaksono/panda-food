@@ -32,12 +32,12 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 			addData: (newObject: any) => {
 				set((state) => {
 					const itemExists = state.data.find(
-						(item) => item._id === newObject._id
+						(item) => item.id === newObject.id
 					);
 
 					if (itemExists) {
 						const updatedData = state.data.map((item) => {
-							if (item._id === newObject._id) {
+							if (item.id === newObject.id) {
 								return {
 									...item,
 									qty: item.qty + 1,
@@ -63,7 +63,7 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 			increaseItem: (id: number | string) => {
 				set((state) => {
 					const increaseData = state.data.map((item) => {
-						if (item._id === id) {
+						if (item.id === id) {
 							return {
 								...item,
 								qty: item.qty + 1,
@@ -79,7 +79,7 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 			decreaseItem: (id: number | string) => {
 				set((state) => {
 					const decreaseData = state.data.map((item) => {
-						if (item._id === id) {
+						if (item.id === id) {
 							return {
 								...item,
 								qty: item.qty - 1,
@@ -97,7 +97,7 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 
 			deleteItem: (id: number | string) => {
 				set((state) => {
-					const deletedState = state.data.filter((item) => item._id !== id);
+					const deletedState = state.data.filter((item) => item.id !== id);
 					return { data: deletedState };
 				});
 			},

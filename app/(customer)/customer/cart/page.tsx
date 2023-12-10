@@ -1,6 +1,7 @@
 "use client";
 import { useAsyncStore } from "@/app/hooks/useAsyncStoreZus";
 import CardCartFood from "@/components/customer/CardCartFood";
+import { Loading } from "@/components/shared/Loading";
 import { sumTotalPayment } from "@/utils/helpers";
 import { useCartStore } from "@/zustand/cart.store";
 import { useRouter } from "next/navigation";
@@ -21,7 +22,7 @@ const CartCustomer = () => {
 			...item,
 			status: "waiting",
 		}));
-
+		console.log(orderItems);
 		await fetch("/api/pusher", {
 			method: "POST",
 			body: JSON.stringify({ status: "waiting", orderItems }),
@@ -34,7 +35,7 @@ const CartCustomer = () => {
 				position: "top-center",
 			});
 			clearPersistedData();
-			push("/customer/history");
+			// push("/customer/history");
 		}, 2000);
 	};
 
@@ -53,9 +54,10 @@ const CartCustomer = () => {
 
 			<div className="my-20 md:w-[768px] md:px-24 w-full px-8 py-8">
 				{data?.map((item) => (
-					<CardCartFood key={item?._id} {...item} />
+					<CardCartFood key={item?.id} {...item} />
 				))}
 			</div>
+			{isLoading && <Loading />}
 
 			<div className="fixed bottom-0 left-0 right-0 z-50 mx-auto md:w-[768px] w-full">
 				<div className="bg-glassBlur border border-slate-200/25 rounded-t-xl p-4">

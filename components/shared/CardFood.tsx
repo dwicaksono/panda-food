@@ -6,10 +6,10 @@ import React from "react";
 import { IoAddCircle } from "react-icons/io5";
 
 const CardFood = (params) => {
-	const { srcUrl, title, price, status, _id } = params;
+	const { srcUrl, title, price, status, id } = params;
 	const { addData } = useCartStore();
 	const addItemHandle = () => {
-		addData({ srcUrl, title, price, status, _id });
+		addData({ srcUrl, title, price, status, id });
 	};
 
 	return (
