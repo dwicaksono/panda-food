@@ -1,28 +1,7 @@
-import React, { useRef, useEffect } from "react";
-import { BrowserBarcodeReader } from "@zxing/library";
+import React, { useRef } from "react";
 
 const BarcodeScanner: React.FC = () => {
 	const videoRef = useRef<HTMLVideoElement>(null);
-
-	useEffect(() => {
-		const codeReader = new BrowserBarcodeReader();
-
-		const callbackFn = (result: any) => {
-			console.log("Decoded:", result.getText());
-			// Handle the scanned barcode result here
-		};
-
-		codeReader
-			.decodeFromInputVideoDevice(undefined, videoRef.current, callbackFn)
-			.catch((err: any) => {
-				console.error("Error:", err);
-				// Handle errors here
-			});
-
-		return () => {
-			codeReader.reset();
-		};
-	}, []);
 
 	return (
 		<div>
