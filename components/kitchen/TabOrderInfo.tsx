@@ -22,7 +22,7 @@ const TabOrderInfo = () => {
 		return null;
 	}
 	return (
-		<div className="bg-[#F6F6F6] border-2 h-screen p-8 drop-shadow-xl min-w-[300px]">
+		<div className="bg-[#F6F6F6] border-2 h-screen p-8 drop-shadow-xl ">
 			<div className="flex justify-between items-center">
 				<h3 className="font-semibold text-lg text-indigo-600">Orders</h3>
 				<button
@@ -32,9 +32,12 @@ const TabOrderInfo = () => {
 				</button>
 			</div>
 			<div className="flex flex-col gap-4 mt-4 h-[calc(100%-5%)] overflow-y-scroll">
-				{ordersData.map((item) => (
-					<CardOrderRightSide key={item.id} data={item} />
-				))}
+				{ordersData.map(
+					(item) =>
+						item.status !== "done" && (
+							<CardOrderRightSide key={item.id} data={item} />
+						)
+				)}
 			</div>
 		</div>
 	);

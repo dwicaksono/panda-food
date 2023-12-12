@@ -45,7 +45,6 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 									...item,
 									qty: item.qty + 1,
 									subPrice: (item.qty + 1) * newObject.price,
-									// Calculate subPrice based on updated quantity
 								};
 							}
 							return item;

@@ -15,13 +15,6 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="w-80 text-xs text-center text-slate-700">
-				{/* <p>
-					This slick web app, serving as a dummy guide, dives into real-time
-					notifications using Pusher. I'm exploring mongoDB integration with
-					Prisma, experimenting with server actions in nextjs 14, and rolling
-					with Zustand for state management. It's a self-order food web app – a
-					cool project where I'm leveling up my skills!
-				</p> */}
 				<TypeWriterComponent />
 			</div>
 			<Link href="/kitchen" target="_blank">

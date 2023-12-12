@@ -54,7 +54,7 @@ export const useSubsribeOrder = () => {
 		return () => {
 			pusherClient.unsubscribe("order");
 		};
-	}, [notifications]);
+	}, [notifications, playOn]);
 
-	return { notifications, countNotif };
+	return { notifications, countNotif, setCountNotif };
 };

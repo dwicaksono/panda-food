@@ -78,8 +78,7 @@ export async function updateStatueOrder(param) {
 		orderItems?.forEach((el) => {
 			if (el.status === "waiting") {
 				el.status = "cooking";
-			}
-			if (el.status === "cooking") {
+			} else if (el.status === "cooking") {
 				el.status = "ready";
 			}
 		});

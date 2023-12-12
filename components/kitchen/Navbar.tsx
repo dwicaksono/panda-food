@@ -5,8 +5,12 @@ import { useCartStore } from "@/zustand/cart.store";
 import { FaConciergeBell } from "react-icons/fa";
 import { SiFoodpanda } from "react-icons/si";
 const Navbar = () => {
-	const { countNotif } = useSubsribeOrder();
+	const { countNotif, setCountNotif } = useSubsribeOrder();
 	const { setIsNotification } = useCartStore();
+	const readNotif = () => {
+		setIsNotification();
+		setCountNotif(0);
+	};
 	return (
 		<>
 			<div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-4 px-6 text-white flex justify-center">
@@ -22,7 +26,7 @@ const Navbar = () => {
 						</div>
 						<div
 							className=" relative w-8 h-8 flex justify-center items-center cursor-pointer"
-							onClick={() => setIsNotification()}>
+							onClick={readNotif}>
 							<FaConciergeBell className="text-xl" />
 							{countNotif > 0 && (
 								<div
