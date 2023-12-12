@@ -31,7 +31,6 @@ const TabOrderInfo = () => {
 					<FaWindowClose />
 				</button>
 			</div>
-			<div>Tab</div>
 			<div className="flex flex-col gap-4 mt-4 h-[calc(100%-5%)] overflow-y-scroll">
 				{ordersData.map((item) => (
 					<CardOrderRightSide key={item.id} data={item} />
