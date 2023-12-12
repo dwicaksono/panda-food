@@ -6,6 +6,7 @@ import { persist } from "zustand/middleware";
 //Define the type for the store state
 interface DataStoreState {
 	data: any[];
+	isNotification: boolean;
 }
 
 // Define the type for the store actions
@@ -15,6 +16,7 @@ interface DataStoreActions {
 	increaseItem: (id: number | string) => void;
 	clearPersistedData: () => void;
 	deleteItem: (id: number | string) => void;
+	setIsNotification: () => void;
 }
 const getInitialData = () => {
 	if (typeof window !== "undefined") {
@@ -29,6 +31,7 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 	persist(
 		(set) => ({
 			data: getInitialData(),
+			isNotification: false,
 			addData: (newObject: any) => {
 				set((state) => {
 					const itemExists = state.data.find(
@@ -105,6 +108,10 @@ export const useCartStore = create<DataStoreState & DataStoreActions>()(
 			clearPersistedData: () => {
 				localStorage.removeItem("myCart"); // Clear the persisted data
 				set({ data: [] }); // Reset the state to an empty array
+			},
+
+			setIsNotification: () => {
+				set((state) => ({ isNotification: !state.isNotification }));
 			},
 		}),
 		{

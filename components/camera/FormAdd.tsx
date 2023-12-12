@@ -5,7 +5,7 @@ import { useForm, SubmitHandler, Controller, get } from "react-hook-form";
 import { z, ZodType } from "zod";
 import Preview from "./Preview";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createProduct } from "@/database/actions/product.actions";
+// import { createProduct } from "@/database/actions/product.actions";
 
 // Define Zod schema
 const schema = z.object({
@@ -38,18 +38,17 @@ const FormAdd: React.FC = () => {
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		// console.log("Form data:", { ...data, image: base64String });
 		// Handle form submission here
-
-		try {
-			await createProduct({
-				...data,
-				image: base64String,
-			});
-			setBase64String("");
-			reset();
-		} catch (error) {
-			console.log(error);
-			throw error;
-		}
+		// try {
+		// 	await createProduct({
+		// 		...data,
+		// 		image: base64String,
+		// 	});
+		// 	setBase64String("");
+		// 	reset();
+		// } catch (error) {
+		// 	console.log(error);
+		// 	throw error;
+		// }
 	};
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +67,6 @@ const FormAdd: React.FC = () => {
 			};
 			reader.readAsDataURL(file);
 		}
-		console.log("masuk");
 	};
 
 	const changeQty = (value: string) => {

@@ -8,15 +8,15 @@ export const useSubsribeOrder = () => {
 		volume: 0.1,
 		interrupt: true,
 	});
-	const [notifications, setNotifications] = useState<any[]>([]);
-
+	const [notifications, setNotifications] = useState<any>({});
+	const [countNotif, setCountNotif] = useState<number>(0);
 	useEffect(() => {
 		const channel = pusherClient.subscribe("order");
 
 		channel.bind("order", (data) => {
-			console.log(data);
 			if (!!data) {
-				setNotifications([...notifications, data]);
+				setNotifications(data);
+				setCountNotif(countNotif + 1);
 				playOn();
 				toast.custom((t) => (
 					<div
@@ -28,9 +28,14 @@ export const useSubsribeOrder = () => {
 								<div className="flex-shrink-0 pt-0.5"></div>
 								<div className="ml-3 flex-1">
 									<p className="text-sm font-medium text-gray-900">
-										{data.name}
+										{data.order.customerName}
 									</p>
-									<p className="mt-1 text-sm text-gray-500">Table 06</p>
+									<p className="mt-1 text-sm text-gray-500">
+										Table {data.order.tableNumber || 0}
+									</p>
+									<p className="mt-1 text-sm text-gray-500">
+										{data.order.status}
+									</p>
 								</div>
 							</div>
 						</div>
@@ -49,7 +54,7 @@ export const useSubsribeOrder = () => {
 		return () => {
 			pusherClient.unsubscribe("order");
 		};
-	}, [notifications, playOn]);
+	}, [notifications]);
 
-	return { notifications };
+	return { notifications, countNotif };
 };

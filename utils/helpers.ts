@@ -32,3 +32,10 @@ export const totalNotificationBadges = (data) => {
 	}
 	return sum || 0;
 };
+
+export const mappingTable = (tableNumber, data) => {
+	const isTableCorrect = data.find(
+		(item) => item.customer.tableNumber === tableNumber
+	);
+	return isTableCorrect;
+};

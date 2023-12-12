@@ -1,15 +1,18 @@
 "use client";
+import { createOrder, getOneOrder } from "@/app/actions/order.actions";
 import { useAsyncStore } from "@/app/hooks/useAsyncStoreZus";
 import CardCartFood from "@/components/customer/CardCartFood";
 import { Loading } from "@/components/shared/Loading";
 import { sumTotalPayment } from "@/utils/helpers";
 import { useCartStore } from "@/zustand/cart.store";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaCircleChevronLeft } from "react-icons/fa6";
 const CartCustomer = () => {
 	const { push, back } = useRouter();
+	const params = useSearchParams();
+	const queryParam = params?.get("table");
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { clearPersistedData } = useCartStore();
@@ -22,21 +25,28 @@ const CartCustomer = () => {
 			...item,
 			status: "waiting",
 		}));
-		console.log(orderItems);
-		await fetch("/api/pusher", {
-			method: "POST",
-			body: JSON.stringify({ status: "waiting", orderItems }),
-			headers: { "content-type": "application/json" },
-		});
-
-		setTimeout(() => {
-			setIsLoading(false);
-			toast.success("Pembayaran anda berhasil, terimakasih", {
-				position: "top-center",
-			});
-			clearPersistedData();
-			// push("/customer/history");
-		}, 2000);
+		const payload = { status: "waiting", total: totalPrice, orderItems };
+		try {
+			await createOrder(queryParam, payload);
+		} catch (error) {
+			console.log(error);
+			throw error;
+		} finally {
+			setTimeout(async () => {
+				setIsLoading(false);
+				const order = await getOneOrder(queryParam);
+				toast.success("Pembayaran anda berhasil, terimakasih", {
+					position: "top-center",
+				});
+				await fetch("/api/pusher", {
+					method: "POST",
+					body: JSON.stringify({ status: "waiting", order }),
+					headers: { "content-type": "application/json" },
+				});
+				clearPersistedData();
+				push(`/customer/history?table=${queryParam}`);
+			}, 1000);
+		}
 	};
 
 	return (

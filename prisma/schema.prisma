@@ -19,18 +19,10 @@ model Menu {
   orderItems orderItems[]
 }
 
-model Table {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  tableNumber Int        @unique
-  qrCode      String
-  Customer    Customer[]
-}
-
 model Customer {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  tableNumber Int?
-  table       Table?  @relation(fields: [tableNumber], references: [tableNumber])
+  tableNumber Int
   Order       Order[]
 }
 
@@ -40,15 +32,16 @@ model Order {
   customer   Customer     @relation(fields: [customerId], references: [id])
   status     String //waiting, inprogress, done
   orderItems orderItems[]
-  total Int
+  total      String
+  createdAt  DateTime     @default(now())
 }
 
-model orderItems {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  menuItemId String  @db.ObjectId
-  menu       Menu    @relation(fields: [menuItemId], references: [id])
-  qty        Int
-  status     String // waiting, cooking, ready
-  Order      Order?  @relation(fields: [orderId], references: [id])
-  orderId    String? @db.ObjectId
+type orderItems {
+  id       String
+  price    Int
+  qty      Int
+  srcUrl   String
+  subPrice Int
+  title    String
+  status   String // waiting, cooking, ready
 }
