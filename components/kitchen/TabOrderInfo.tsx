@@ -22,7 +22,7 @@ const TabOrderInfo = () => {
 		return null;
 	}
 	return (
-		<div className="bg-[#F6F6F6] border-2 h-screen p-8 drop-shadow-xl">
+		<div className="bg-[#F6F6F6] border-2 h-screen p-8 drop-shadow-xl min-w-[300px]">
 			<div className="flex justify-between items-center">
 				<h3 className="font-semibold text-lg text-indigo-600">Orders</h3>
 				<button
