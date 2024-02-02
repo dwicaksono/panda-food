@@ -4,7 +4,7 @@
 
 ## 🌐 Demo
 
-Here is a working live demo: "soon"
+Here is a working live demo: link(https://scanstock.vercel.app/customer?table=9)
 
 ## 📝 Description
 
